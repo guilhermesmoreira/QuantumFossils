@@ -1,7 +1,7 @@
 import { useResources, useClickPower, useGameActions } from './app/store/hooks'
 import './App.css'
 
-function App() {
+function TestApp() {
   const resources = useResources()
   const clickPower = useClickPower()
   const { clickDna } = useGameActions()
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Quantum Fossils</h1>
+        <h1>Quantum Fossils - Teste</h1>
         <p>Tier 0 — Laboratório do Cientista Maluco</p>
         
         <div className="resources">
@@ -35,4 +35,4 @@ function App() {
   )
 }
 
-export default App
+export default TestApp
