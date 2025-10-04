@@ -6,6 +6,9 @@ function App() {
   const resources = useResources()
   const clickPower = useClickPower()
   const { clickDna } = useGameActions()
+  const resources = useResources()
+  const clickPower = useClickPower()
+  const { clickDna } = useGameActions()
 
   return (
     <div className={styles.app}>
