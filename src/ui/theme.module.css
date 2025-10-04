@@ -1,0 +1,187 @@
+/* Tokens de design futurista para Quantum Fossils */
+/* CSS custom properties para o tema sci-fi */
+
+:root {
+  /* Paleta de cores futurista */
+  --color-primary: #6EE7F8;        /* Ciano claro */
+  --color-primary-hover: #4ECDE4;  /* Ciano hover */
+  --color-secondary: #8B5CF6;      /* Violeta */
+  --color-secondary-hover: #7C3AED; /* Violeta hover */
+  
+  /* Fundos */
+  --color-bg-primary: #0B1020;     /* Azul-anil profundo */
+  --color-bg-secondary: #131A2E;   /* Cards */
+  --color-bg-tertiary: #1A2332;    /* Elementos elevados */
+  
+  /* Bordas e divisores */
+  --color-border: #2A3357;         /* Bordas */
+  --color-border-light: #3A4567;   /* Bordas claras */
+  --color-border-glow: #6EE7F8;    /* Glow effect */
+  
+  /* Textos */
+  --color-text-primary: #E6F0FF;   /* Texto principal */
+  --color-text-secondary: #9BB0D3; /* Texto secundário */
+  --color-text-muted: #6B7A99;     /* Texto desabilitado */
+  
+  /* Estados */
+  --color-success: #22C55E;        /* Sucesso */
+  --color-warning: #F59E0B;        /* Alerta */
+  --color-error: #EF4444;          /* Erro */
+  --color-info: #3B82F6;           /* Informação */
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(110, 231, 248, 0.3);
+  --shadow-glow-strong: 0 0 30px rgba(110, 231, 248, 0.5);
+  
+  /* Espaçamentos */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  
+  /* Bordas */
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-full: 9999px;  /* Circular */
+  
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-popover: 1050;
+  --z-tooltip: 1060;
+}
+
+/* Tipografia */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+.font-display {
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Classes utilitárias para cores */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+.text-muted { color: var(--color-text-muted); }
+
+.bg-primary { background-color: var(--color-bg-primary); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-tertiary { background-color: var(--color-bg-tertiary); }
+
+.border-primary { border-color: var(--color-border); }
+.border-glow { border-color: var(--color-border-glow); }
+
+/* Efeitos de glassmorphism */
+.glass {
+  background: rgba(19, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(110, 231, 248, 0.2);
+}
+
+.glass-strong {
+  background: rgba(19, 26, 46, 0.8);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(110, 231, 248, 0.3);
+}
+
+/* Efeitos de glow */
+.glow {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-strong {
+  box-shadow: var(--shadow-glow-strong);
+}
+
+.glow-text {
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* Animações */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: var(--shadow-glow);
+  }
+  50% { 
+    box-shadow: var(--shadow-glow-strong);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slide-in {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-glow-pulse { animation: glow-pulse 2s infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-slide-in { animation: slide-in 0.5s ease-out; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+  :root {
+    --space-md: 0.75rem;
+    --space-lg: 1.25rem;
+    --space-xl: 1.5rem;
+  }
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-light);
+}
