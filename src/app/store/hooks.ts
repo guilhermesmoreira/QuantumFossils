@@ -23,6 +23,11 @@ export const useClickPower = () => {
   return useGameStore(state => state.clickPower)
 }
 
+// Hook para acumuladores de produção
+export const useProductionAccumulators = () => {
+  return useGameStore(state => state.productionAccumulators)
+}
+
 // Hook para upgrades
 export const useUpgrades = () => {
   return useGameStore(state => state.upgrades)

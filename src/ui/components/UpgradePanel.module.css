@@ -1,0 +1,137 @@
+/* Estilos do componente UpgradePanel */
+
+.upgradePanel {
+  background: var(--color-bg-primary);
+  min-height: 100vh;
+  padding: var(--space-xl);
+  color: var(--color-text-primary);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.title {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-sm) 0;
+  text-shadow: 0 0 20px rgba(110, 231, 248, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  position: relative;
+}
+
+.category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.categoryIcon {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.categoryTitle {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.upgradesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .upgradePanel {
+    padding: var(--space-lg);
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .category {
+    padding: var(--space-lg);
+  }
+  
+  .upgradesGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  
+  .categoryIcon {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .categoryTitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .upgradePanel {
+    padding: var(--space-md);
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .category {
+    padding: var(--space-md);
+  }
+}

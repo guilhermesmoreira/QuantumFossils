@@ -20,10 +20,17 @@ export interface ClickPower {
   dnaPerClick: number
 }
 
+export interface ProductionAccumulators {
+  dnaAccumulator: number
+  energyAccumulator: number
+}
+
 export interface Upgrade {
   id: string
   name: string
   description: string
+  icon: string
+  category: string
   baseCost: number
   costMultiplier: number
   level: number
@@ -40,6 +47,7 @@ export interface GameState {
   capacities: Capacities
   productionRates: ProductionRates
   clickPower: ClickPower
+  productionAccumulators: ProductionAccumulators
   upgrades: Record<string, Upgrade>
   tier: number
   sessionStartTime: number

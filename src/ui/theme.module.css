@@ -1,6 +1,9 @@
 /* Tokens de design futurista para Quantum Fossils */
 /* CSS custom properties para o tema sci-fi */
 
+/* Tipografia */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
   /* Paleta de cores futurista */
   --color-primary: #6EE7F8;        /* Ciano claro */
@@ -65,9 +68,6 @@
   --z-popover: 1050;
   --z-tooltip: 1060;
 }
-
-/* Tipografia */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
 
 .font-display {
   font-family: 'Orbitron', monospace;
