@@ -39,6 +39,15 @@ export const TIER_0_BALANCE = {
     unlocked: false // Desbloqueado após ter 1 Estagiário
   },
   
+  DNA_STORAGE: {
+    baseCost: 100,
+    costMultiplier: 1.15,
+    maxLevel: 10,
+    effect: 20, // +20 capacidade DNA
+    effectType: 'dnaCapacity' as const,
+    unlocked: true
+  },
+  
   // Upgrades de Energia
   IMPROVISED_GENERATOR: {
     baseCost: 50,

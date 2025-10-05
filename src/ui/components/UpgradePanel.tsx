@@ -3,7 +3,7 @@
 
 import React from 'react'
 import { UpgradeCard } from './UpgradeCard'
-import { UPGRADE_CATEGORIES, getUpgradesByCategory } from '../../domain/content'
+import { getUpgradesByCategory } from '../../domain/content'
 import { useResources, useUpgrades, useGameActions } from '../../app/store/hooks'
 import styles from './UpgradePanel.module.css'
 
@@ -16,37 +16,6 @@ export const UpgradePanel: React.FC = () => {
     buyUpgrade(upgradeId)
   }
 
-  const renderUpgradeCategory = (category: string) => {
-    const categoryUpgrades = getUpgradesByCategory(category)
-    const categoryInfo = UPGRADE_CATEGORIES[category as keyof typeof UPGRADE_CATEGORIES]
-
-    return (
-      <div key={category} className={styles.category}>
-        <div className={styles.categoryHeader}>
-          <span className={styles.categoryIcon}>{categoryInfo.icon}</span>
-          <h2 className={styles.categoryTitle}>{categoryInfo.name}</h2>
-        </div>
-        
-        <div className={styles.upgradesGrid}>
-          {categoryUpgrades.map(upgradeTemplate => {
-            const upgrade = upgrades[upgradeTemplate.id]
-            if (!upgrade) return null
-
-            return (
-              <UpgradeCard
-                key={upgrade.id}
-                upgrade={upgrade}
-                currentDna={resources.dna}
-                currentEnergy={resources.energy}
-                onBuy={handleBuyUpgrade}
-                gameState={{ resources, upgrades }}
-              />
-            )
-          })}
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className={styles.upgradePanel}>
@@ -55,8 +24,54 @@ export const UpgradePanel: React.FC = () => {
         <p className={styles.subtitle}>Improve your production and capacities</p>
       </div>
       
-      <div className={styles.categories}>
-        {Object.keys(UPGRADE_CATEGORIES).map(renderUpgradeCategory)}
+      <div className={styles.columnsContainer}>
+        <div className={styles.column}>
+          <div className={styles.columnHeader}>
+            <span className={styles.columnIcon}>🧬</span>
+            <h2 className={styles.columnTitle}>DNA Upgrades</h2>
+          </div>
+          <div className={styles.upgradesList}>
+            {getUpgradesByCategory('dna').map(upgradeTemplate => {
+              const upgrade = upgrades[upgradeTemplate.id]
+              if (!upgrade) return null
+
+              return (
+                <UpgradeCard
+                  key={upgrade.id}
+                  upgrade={upgrade}
+                  currentDna={resources.dna}
+                  currentEnergy={resources.energy}
+                  onBuy={handleBuyUpgrade}
+                  gameState={{ resources, upgrades }}
+                />
+              )
+            })}
+          </div>
+        </div>
+
+        <div className={styles.column}>
+          <div className={styles.columnHeader}>
+            <span className={styles.columnIcon}>🔋</span>
+            <h2 className={styles.columnTitle}>Energy Upgrades</h2>
+          </div>
+          <div className={styles.upgradesList}>
+            {getUpgradesByCategory('energy').map(upgradeTemplate => {
+              const upgrade = upgrades[upgradeTemplate.id]
+              if (!upgrade) return null
+
+              return (
+                <UpgradeCard
+                  key={upgrade.id}
+                  upgrade={upgrade}
+                  currentDna={resources.dna}
+                  currentEnergy={resources.energy}
+                  onBuy={handleBuyUpgrade}
+                  gameState={{ resources, upgrades }}
+                />
+              )
+            })}
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -45,6 +45,16 @@ export const UPGRADES = {
     ...TIER_0_BALANCE.PORTABLE_LAB
   },
   
+  DNA_STORAGE: {
+    id: 'DNA_STORAGE',
+    name: 'DNA Storage',
+    description: 'Increases DNA capacity by +20',
+    icon: '📦',
+    category: 'dna',
+    costType: 'dna' as const,
+    ...TIER_0_BALANCE.DNA_STORAGE
+  },
+  
   // Energy Upgrades
   IMPROVISED_GENERATOR: {
     id: 'IMPROVISED_GENERATOR',
