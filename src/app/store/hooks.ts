@@ -42,6 +42,8 @@ export const useGameActions = () => {
   const updateProduction = useGameStore(state => state.updateProduction)
   const setResources = useGameStore(state => state.setResources)
   const resetGame = useGameStore(state => state.resetGame)
+  const loadGame = useGameStore(state => state.loadGame)
+  const saveGame = useGameStore(state => state.saveGame)
 
   return {
     clickDna,
@@ -50,7 +52,9 @@ export const useGameActions = () => {
     buyUpgrade,
     updateProduction,
     setResources,
-    resetGame
+    resetGame,
+    loadGame,
+    saveGame
   }
 }
 

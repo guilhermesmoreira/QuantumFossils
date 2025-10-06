@@ -5,6 +5,7 @@ import { create } from 'zustand'
 import type { GameState, Resources } from '../../domain/types'
 import { UPGRADES } from '../../domain/content'
 import { calculateUpgradeCost, calculateEnergyCost, canUnlockUpgrade } from '../../domain/balance'
+import { saveManager } from '../persistence/saveManager'
 
 interface GameStore extends GameState {
   // Actions
@@ -15,6 +16,8 @@ interface GameStore extends GameState {
   updateProduction: (deltaTime: number) => void
   setResources: (resources: Partial<Resources>) => void
   resetGame: () => void
+  loadGame: (gameState: GameState) => void
+  saveGame: () => void
 }
 
 // Estado inicial do jogo
@@ -54,8 +57,14 @@ const initialState: GameState = {
   lastSaveTime: Date.now()
 }
 
+// Carregar estado inicial do localStorage
+const loadInitialState = (): GameState => {
+  const savedState = saveManager.loadFromLocalStorage()
+  return savedState || initialState
+}
+
 export const useGameStore = create<GameStore>((set, get) => ({
-  ...initialState,
+  ...loadInitialState(),
 
   // Clique para gerar DNA
   clickDna: () => {
@@ -164,6 +173,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
       upgrades: newUpgrades
     })
     
+    // Auto-save após compra
+    saveManager.saveToLocalStorage(get())
+    
     return true
   },
 
@@ -222,5 +234,16 @@ export const useGameStore = create<GameStore>((set, get) => ({
   // Resetar jogo
   resetGame: () => {
     set(initialState)
+  },
+
+  // Carregar jogo
+  loadGame: (gameState: GameState) => {
+    set(gameState)
+  },
+
+  // Salvar jogo
+  saveGame: () => {
+    const state = get()
+    saveManager.saveToLocalStorage(state)
   }
 }))

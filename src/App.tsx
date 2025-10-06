@@ -2,6 +2,7 @@ import React from 'react'
 import { useResources, useClickPower, useGameActions, useCapacities, useProduction, useUpgrades } from './app/store/hooks'
 import { UpgradeCard } from './ui/components/UpgradeCard'
 import { ProgressBar } from './ui/components/ProgressBar'
+import { SaveLoadModal } from './ui/components/SaveLoadModal'
 import { getUpgradesByCategory, UPGRADES } from './domain/content'
 import styles from './App.module.css'
 import './ui/theme.module.css'
@@ -12,7 +13,7 @@ function App() {
   const capacities = useCapacities()
   const production = useProduction()
   const upgrades = useUpgrades()
-  const { clickDna, updateProduction, buyUpgrade } = useGameActions()
+  const { clickDna, updateProduction, buyUpgrade, loadGame, saveGame } = useGameActions()
 
   // Game loop para produção automática
   React.useEffect(() => {
@@ -23,7 +24,17 @@ function App() {
     return () => clearInterval(interval)
   }, [updateProduction])
 
+  // Auto-save a cada 60 segundos
+  React.useEffect(() => {
+    const autoSaveInterval = setInterval(() => {
+      saveGame()
+    }, 60000) // 60 segundos
+    
+    return () => clearInterval(autoSaveInterval)
+  }, [saveGame])
+
   const [showMaxUpgrades, setShowMaxUpgrades] = React.useState(false)
+  const [showSaveLoadModal, setShowSaveLoadModal] = React.useState(false)
 
   const handleBuyUpgrade = (upgradeId: string) => {
     buyUpgrade(upgradeId)
@@ -52,6 +63,15 @@ function App() {
         <div className={styles.titleSection}>
           <h1 className={styles.title}>Quantum Fossils</h1>
           <p className={styles.subtitle}>Tier 0 — Mad Scientist Laboratory</p>
+          
+          <div className={styles.saveLoadButtons}>
+            <button 
+              className={styles.saveButton}
+              onClick={() => setShowSaveLoadModal(true)}
+            >
+              💾 Save/Load
+            </button>
+          </div>
         </div>
 
 
@@ -144,6 +164,23 @@ function App() {
           </div>
         </div>
       </header>
+
+      <SaveLoadModal
+        isOpen={showSaveLoadModal}
+        onClose={() => setShowSaveLoadModal(false)}
+        gameState={{
+          resources,
+          capacities,
+          productionRates: production,
+          clickPower,
+          productionAccumulators: { dnaAccumulator: 0, energyAccumulator: 0 },
+          upgrades,
+          tier: 0,
+          sessionStartTime: Date.now(),
+          lastSaveTime: Date.now()
+        }}
+        onLoad={loadGame}
+      />
     </div>
   )
 }
