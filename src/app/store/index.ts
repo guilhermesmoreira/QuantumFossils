@@ -104,9 +104,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
           totalDnaCollected: state.achievements.totalDnaCollected + dnaGained
         }
       })
-    } else {
-      // TODO: Adicionar feedback visual de capacidade cheia
-      console.log('DNA capacity is full!')
     }
   },
 

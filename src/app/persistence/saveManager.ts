@@ -34,7 +34,6 @@ export const saveToLocalStorage = (gameState: GameState): void => {
     }
     
     localStorage.setItem(SAVE_KEY, JSON.stringify(saveData))
-    console.log('Game saved to localStorage')
   } catch (error) {
     console.error('Failed to save to localStorage:', error)
   }
@@ -54,7 +53,6 @@ export const loadFromLocalStorage = (): GameState | null => {
       return migrateSave(saveData)
     }
     
-    console.log('Game loaded from localStorage')
     return saveData.gameState
   } catch (error) {
     console.error('Failed to load from localStorage:', error)
@@ -98,7 +96,6 @@ export const importSave = (saveString: string): GameState | null => {
       return migrateSave(saveData)
     }
     
-    console.log('Game imported from string')
     return saveData.gameState
   } catch (error) {
     console.error('Failed to import save:', error)
@@ -110,7 +107,6 @@ export const importSave = (saveString: string): GameState | null => {
 export const clearSave = (): void => {
   try {
     localStorage.removeItem(SAVE_KEY)
-    console.log('Save cleared')
   } catch (error) {
     console.error('Failed to clear save:', error)
   }

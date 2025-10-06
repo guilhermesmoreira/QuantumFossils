@@ -212,8 +212,24 @@
 }
 
 .actionButton:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.95);
   box-shadow: var(--shadow-md);
+  animation: clickPulse 0.3s ease-out;
+}
+
+@keyframes clickPulse {
+  0% {
+    transform: translateY(0) scale(0.95);
+    box-shadow: 0 0 20px rgba(110, 231, 248, 0.8);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 0 40px rgba(110, 231, 248, 1);
+  }
+  100% {
+    transform: translateY(-2px) scale(1);
+    box-shadow: var(--shadow-glow-strong);
+  }
 }
 
 .upgradeFilter {

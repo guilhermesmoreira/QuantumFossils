@@ -41,9 +41,14 @@ function App() {
   const [showSaveLoadModal, setShowSaveLoadModal] = React.useState(false)
   const [showTier1Notification, setShowTier1Notification] = React.useState(false)
   const [tier1Unlocked, setTier1Unlocked] = React.useState(false)
+  
 
   const handleBuyUpgrade = (upgradeId: string) => {
     buyUpgrade(upgradeId)
+  }
+
+  const handleClickDna = () => {
+    clickDna()
   }
 
   // Verificar desbloqueio do Tier 1 (sem notificação automática)
@@ -153,11 +158,11 @@ function App() {
           </div>
 
           <div className={styles.centerContent}>
-            <div className={styles.card}>
-              <button className={styles.actionButton} onClick={clickDna}>
-                DNA (+{clickPower.dnaPerClick})
-              </button>
-            </div>
+              <div className={styles.card}>
+                <button className={styles.actionButton} onClick={handleClickDna}>
+                  DNA (+{clickPower.dnaPerClick})
+                </button>
+              </div>
             
             <div className={styles.resources}>
               <ProgressBar
@@ -254,6 +259,7 @@ function App() {
           description="You've accumulated 1000+ DNA and 400+ Energy! The first dinosaurs are now available for creation."
           onClose={() => setShowTier1Notification(false)}
         />
+
       </div>
     )
   }
