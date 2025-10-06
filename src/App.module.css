@@ -70,6 +70,7 @@
   display: flex;
   gap: var(--space-sm);
   margin-top: var(--space-md);
+  transform: translateX(180px);
 }
 
 .saveButton {
@@ -109,6 +110,8 @@
   margin: 0 0 var(--space-sm) 0;
   text-shadow: 0 0 20px rgba(110, 231, 248, 0.5);
   letter-spacing: 0.1em;
+  transform: translateX(180px);
+
 }
 
 .subtitle {
@@ -116,6 +119,7 @@
   color: var(--color-text-secondary);
   margin: 0;
   font-weight: 500;
+  transform: translateX(180px);
 }
 
 .resources {
