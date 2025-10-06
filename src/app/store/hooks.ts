@@ -34,6 +34,10 @@ export const useUpgrades = () => {
 }
 
 // Hook para ações
+export const useAchievements = () => {
+  return useGameStore(state => state.achievements)
+}
+
 export const useGameActions = () => {
   const clickDna = useGameStore(state => state.clickDna)
   const addDna = useGameStore(state => state.addDna)
@@ -41,6 +45,7 @@ export const useGameActions = () => {
   const buyUpgrade = useGameStore(state => state.buyUpgrade)
   const updateProduction = useGameStore(state => state.updateProduction)
   const setResources = useGameStore(state => state.setResources)
+  const updateAchievements = useGameStore(state => state.updateAchievements)
   const resetGame = useGameStore(state => state.resetGame)
   const loadGame = useGameStore(state => state.loadGame)
   const saveGame = useGameStore(state => state.saveGame)
@@ -52,6 +57,7 @@ export const useGameActions = () => {
     buyUpgrade,
     updateProduction,
     setResources,
+    updateAchievements,
     resetGame,
     loadGame,
     saveGame

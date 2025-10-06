@@ -1,0 +1,122 @@
+/* Estilos para notificação de desbloqueio */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.notification {
+  background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-glow);
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.overlay.visible .notification {
+  transform: scale(1) translateY(0);
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.content {
+  margin-bottom: var(--space-md);
+}
+
+.title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-sm) 0;
+  text-shadow: 0 0 10px rgba(110, 231, 248, 0.3);
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transform: scale(1.1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .notification {
+    padding: var(--space-md);
+    max-width: 350px;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+  }
+  
+  .icon {
+    font-size: 2.5rem;
+  }
+}

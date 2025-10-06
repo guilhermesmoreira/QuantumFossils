@@ -33,13 +33,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 200px;
+}
+
+@media (max-width: 768px) {
+  .titleContent {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
 }
 
 .titleSection {
+  margin-bottom: var(--space-lg);
+}
+
+.titleContent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: var(--space-lg);
+}
+
+.titleText {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: var(--space-lg);
+  text-align: center;
+  flex: 1;
 }
 
 .saveLoadButtons {

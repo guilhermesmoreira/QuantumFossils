@@ -3,7 +3,8 @@
 
 import React from 'react'
 import type { Upgrade } from '../../domain/types'
-import { calculateUpgradeCost, calculateEnergyCost, canUnlockUpgrade } from '../../domain/balance'
+import { calculateUpgradeCost, calculateEnergyCost } from '../../domain/balance'
+import { isUpgradeUnlocked, getUnlockProgress } from '../../domain/unlocks'
 import styles from './UpgradeCard.module.css'
 
 interface UpgradeCardProps {
@@ -11,17 +12,20 @@ interface UpgradeCardProps {
   currentDna: number
   currentEnergy: number
   onBuy: (upgradeId: string) => void
+  gameState: any
 }
 
 export const UpgradeCard: React.FC<UpgradeCardProps> = ({
   upgrade,
   currentDna,
   currentEnergy,
-  onBuy
+  onBuy,
+  gameState
 }) => {
   const cost = calculateUpgradeCost(upgrade.baseCost, upgrade.level, upgrade.costMultiplier)
   const energyCost = calculateEnergyCost(upgrade.baseEnergyCost || 0, upgrade.level, upgrade.energyCostMultiplier || 1.1)
-  const isUnlocked = canUnlockUpgrade()
+  const isUnlocked = isUpgradeUnlocked(upgrade.id, gameState)
+  const unlockProgress = getUnlockProgress(upgrade.id, gameState)
   const canAfford = currentDna >= cost && currentEnergy >= energyCost
   const isMaxLevel = upgrade.level >= upgrade.maxLevel
   const canBuy = isUnlocked && canAfford && !isMaxLevel
@@ -61,13 +65,25 @@ export const UpgradeCard: React.FC<UpgradeCardProps> = ({
         </div>
       </div>
       
-      <button 
-        className={getButtonClass()}
-        onClick={handleBuy}
-        disabled={!canBuy}
-      >
-        {getButtonText()}
-      </button>
+      {!isUnlocked ? (
+        <div className={styles.unlockProgress}>
+          <div className={styles.progressBar}>
+            <div 
+              className={styles.progressFill}
+              style={{ width: `${unlockProgress.progress}%` }}
+            />
+          </div>
+          <span className={styles.progressText}>{unlockProgress.description}</span>
+        </div>
+      ) : (
+        <button 
+          className={getButtonClass()}
+          onClick={handleBuy}
+          disabled={!canBuy}
+        >
+          {getButtonText()}
+        </button>
+      )}
     </div>
   )
 }

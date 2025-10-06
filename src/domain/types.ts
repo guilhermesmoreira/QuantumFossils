@@ -43,6 +43,18 @@ export interface Upgrade {
   costType: 'dna' | 'energy' | 'both'
 }
 
+export interface Achievements {
+  maxEnergyReached: number
+  maxDnaReached: number
+  totalDnaCollected: number
+  totalEnergyCollected: number
+  hasReached25Energy: boolean
+  hasReached100Energy: boolean
+  hasReached100Dna: boolean
+  hasReached1000Dna: boolean
+  hasReached400Energy: boolean
+}
+
 export interface GameState {
   resources: Resources
   capacities: Capacities
@@ -50,6 +62,7 @@ export interface GameState {
   clickPower: ClickPower
   productionAccumulators: ProductionAccumulators
   upgrades: Record<string, Upgrade>
+  achievements: Achievements
   tier: number
   sessionStartTime: number
   lastSaveTime: number

@@ -15,6 +15,7 @@ interface GameStore extends GameState {
   buyUpgrade: (upgradeId: string) => boolean
   updateProduction: (deltaTime: number) => void
   setResources: (resources: Partial<Resources>) => void
+  updateAchievements: () => void
   resetGame: () => void
   loadGame: (gameState: GameState) => void
   saveGame: () => void
@@ -52,6 +53,17 @@ const initialState: GameState = {
     IMPROVISED_BATTERY: { ...UPGRADES.IMPROVISED_BATTERY, level: 0 },
     MICRO_PLASMA_REACTOR: { ...UPGRADES.MICRO_PLASMA_REACTOR, level: 0 }
   },
+  achievements: {
+    maxEnergyReached: 0,
+    maxDnaReached: 0,
+    totalDnaCollected: 0,
+    totalEnergyCollected: 0,
+    hasReached25Energy: false,
+    hasReached100Energy: false,
+    hasReached100Dna: false,
+    hasReached1000Dna: false,
+    hasReached400Energy: false
+  },
   tier: 0,
   sessionStartTime: Date.now(),
   lastSaveTime: Date.now()
@@ -60,7 +72,14 @@ const initialState: GameState = {
 // Carregar estado inicial do localStorage
 const loadInitialState = (): GameState => {
   const savedState = saveManager.loadFromLocalStorage()
-  return savedState || initialState
+  if (savedState) {
+    // Garantir que achievements existe (para compatibilidade com saves antigos)
+    if (!savedState.achievements) {
+      savedState.achievements = initialState.achievements
+    }
+    return savedState
+  }
+  return initialState
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -76,8 +95,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
     // Só gera DNA se não estiver na capacidade máxima
     if (dna < dnaCapacity) {
       const newDna = Math.min(dna + dnaPerClick, dnaCapacity)
+      const dnaGained = newDna - dna
+      
       set({
-        resources: { ...state.resources, dna: newDna }
+        resources: { ...state.resources, dna: newDna },
+        achievements: {
+          ...state.achievements,
+          totalDnaCollected: state.achievements.totalDnaCollected + dnaGained
+        }
       })
     } else {
       // TODO: Adicionar feedback visual de capacidade cheia
@@ -92,8 +117,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const { dna: dnaCapacity } = state.capacities
     
     const newDna = Math.min(dna + amount, dnaCapacity)
+    const dnaGained = newDna - dna
+    
     set({
-      resources: { ...state.resources, dna: newDna }
+      resources: { ...state.resources, dna: newDna },
+      achievements: {
+        ...state.achievements,
+        totalDnaCollected: state.achievements.totalDnaCollected + dnaGained
+      }
     })
   },
 
@@ -104,8 +135,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const { energy: energyCapacity } = state.capacities
     
     const newEnergy = Math.min(energy + amount, energyCapacity)
+    const energyGained = newEnergy - energy
+    
     set({
-      resources: { ...state.resources, energy: newEnergy }
+      resources: { ...state.resources, energy: newEnergy },
+      achievements: {
+        ...state.achievements,
+        totalEnergyCollected: state.achievements.totalEnergyCollected + energyGained
+      }
     })
   },
 
@@ -217,10 +254,22 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (newDna !== state.resources.dna || newEnergy !== state.resources.energy || 
         newDnaAccumulator !== state.productionAccumulators.dnaAccumulator || 
         newEnergyAccumulator !== state.productionAccumulators.energyAccumulator) {
+      
+      const dnaGained = newDna - state.resources.dna
+      const energyGained = newEnergy - state.resources.energy
+      
       set({
         resources: { ...state.resources, dna: newDna, energy: newEnergy },
-        productionAccumulators: { dnaAccumulator: newDnaAccumulator, energyAccumulator: newEnergyAccumulator }
+        productionAccumulators: { dnaAccumulator: newDnaAccumulator, energyAccumulator: newEnergyAccumulator },
+        achievements: {
+          ...state.achievements,
+          totalDnaCollected: state.achievements.totalDnaCollected + dnaGained,
+          totalEnergyCollected: state.achievements.totalEnergyCollected + energyGained
+        }
       })
+      
+      // Atualizar achievements após mudanças nos recursos
+      get().updateAchievements()
     }
   },
 
@@ -229,6 +278,51 @@ export const useGameStore = create<GameStore>((set, get) => ({
     set(state => ({
       resources: { ...state.resources, ...resources }
     }))
+  },
+
+  // Atualizar achievements baseado nos recursos atuais
+  updateAchievements: () => {
+    set(state => {
+      const { dna, energy } = state.resources
+      const { achievements } = state
+      
+      const newAchievements = { ...achievements }
+      
+      // Atualizar máximo de DNA alcançado
+      if (dna > achievements.maxDnaReached) {
+        newAchievements.maxDnaReached = dna
+      }
+      
+      // Atualizar máximo de Energy alcançado
+      if (energy > achievements.maxEnergyReached) {
+        newAchievements.maxEnergyReached = energy
+      }
+      
+      // Marcar marcos alcançados
+      if (energy >= 25 && !achievements.hasReached25Energy) {
+        newAchievements.hasReached25Energy = true
+      }
+      
+      if (energy >= 100 && !achievements.hasReached100Energy) {
+        newAchievements.hasReached100Energy = true
+      }
+      
+      if (dna >= 100 && !achievements.hasReached100Dna) {
+        newAchievements.hasReached100Dna = true
+      }
+      
+      if (achievements.totalDnaCollected >= 1000 && !achievements.hasReached1000Dna) {
+        newAchievements.hasReached1000Dna = true
+      }
+      
+      if (achievements.totalEnergyCollected >= 400 && !achievements.hasReached400Energy) {
+        newAchievements.hasReached400Energy = true
+      }
+      
+      return {
+        achievements: newAchievements
+      }
+    })
   },
 
   // Resetar jogo
