@@ -1,5 +1,6 @@
 import React from 'react'
 import { useResources, useClickPower, useGameActions, useCapacities, useProduction, useUpgrades, useAchievements } from './app/store/hooks'
+import { useGameLoop } from './app/hooks/useGameLoop'
 import { UpgradeCard } from './ui/components/UpgradeCard'
 import { ProgressBar } from './ui/components/ProgressBar'
 import { SaveLoadModal } from './ui/components/SaveLoadModal'
@@ -19,14 +20,21 @@ function App() {
   const achievements = useAchievements()
   const { clickDna, updateProduction, buyUpgrade, loadGame, saveGame } = useGameActions()
 
-  // Game loop para produção automática
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      updateProduction(1/60) // 60 FPS
-    }, 1000/60)
-    
-    return () => clearInterval(interval)
-  }, [updateProduction])
+  // Game loop com requestAnimationFrame para produção automática
+  useGameLoop({
+    onUpdate: (deltaTime) => {
+      updateProduction(deltaTime)
+      
+      // Atualizar estatísticas do game loop
+      setGameLoopStats({
+        fps: Math.round(1 / deltaTime),
+        deltaTime: Math.round(deltaTime * 1000) / 1000,
+        lastUpdate: Date.now()
+      })
+    },
+    targetFPS: 60,
+    enabled: true
+  })
 
   // Auto-save a cada 60 segundos
   React.useEffect(() => {
@@ -41,6 +49,13 @@ function App() {
   const [showSaveLoadModal, setShowSaveLoadModal] = React.useState(false)
   const [showTier1Notification, setShowTier1Notification] = React.useState(false)
   const [tier1Unlocked, setTier1Unlocked] = React.useState(false)
+  
+  // Estados para debug do game loop
+  const [gameLoopStats, setGameLoopStats] = React.useState({
+    fps: 0,
+    deltaTime: 0,
+    lastUpdate: 0
+  })
   
 
   const handleBuyUpgrade = (upgradeId: string) => {
@@ -259,6 +274,25 @@ function App() {
           description="You've accumulated 1000+ DNA and 400+ Energy! The first dinosaurs are now available for creation."
           onClose={() => setShowTier1Notification(false)}
         />
+
+        {/* Debug overlay temporário para game loop */}
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          left: '10px',
+          background: 'rgba(0, 0, 0, 0.8)',
+          color: '#6ee7f8',
+          padding: '10px',
+          borderRadius: '5px',
+          fontFamily: 'Orbitron, monospace',
+          fontSize: '12px',
+          zIndex: 1000,
+          border: '1px solid #6ee7f8'
+        }}>
+          <div>FPS: {gameLoopStats.fps}</div>
+          <div>DeltaTime: {gameLoopStats.deltaTime}s</div>
+          <div>Last Update: {new Date(gameLoopStats.lastUpdate).toLocaleTimeString()}</div>
+        </div>
 
       </div>
     )
