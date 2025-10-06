@@ -32,14 +32,15 @@ export interface Upgrade {
   icon: string
   category: string
   baseCost: number
+  baseEnergyCost: number
   costMultiplier: number
+  energyCostMultiplier: number
   level: number
   maxLevel: number
   effect: number
   effectType: 'dnaPerClick' | 'dnaPerSecond' | 'energyPerSecond' | 'dnaCapacity' | 'energyCapacity'
   unlocked: boolean
   costType: 'dna' | 'energy' | 'both'
-  energyCost?: number
 }
 
 export interface GameState {

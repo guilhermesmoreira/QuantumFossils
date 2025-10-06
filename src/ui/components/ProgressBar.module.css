@@ -1,0 +1,152 @@
+/* Estilos do componente ProgressBar */
+
+.container {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.containerNearFull {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.containerFull {
+  border-color: var(--color-error);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.icon {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-family: 'Orbitron', monospace;
+  flex: 1;
+}
+
+.percentage {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: 'Orbitron', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.fullText {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-error);
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.05em;
+  margin-left: var(--space-xs);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  font-family: 'Orbitron', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.currentValue {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.separator {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.maxValue {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.productionRate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-border);
+}
+
+.productionLabel {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
+}
+
+.productionValue {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: var(--space-xs);
+  }
+  
+  .label {
+    font-size: 0.8rem;
+  }
+  
+  .percentage {
+    font-size: 0.7rem;
+  }
+  
+  .currentValue {
+    font-size: 0.8rem;
+  }
+}

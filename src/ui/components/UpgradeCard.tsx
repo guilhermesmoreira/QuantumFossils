@@ -3,7 +3,7 @@
 
 import React from 'react'
 import type { Upgrade } from '../../domain/types'
-import { calculateUpgradeCost, canUnlockUpgrade } from '../../domain/balance'
+import { calculateUpgradeCost, calculateEnergyCost, canUnlockUpgrade } from '../../domain/balance'
 import styles from './UpgradeCard.module.css'
 
 interface UpgradeCardProps {
@@ -11,19 +11,18 @@ interface UpgradeCardProps {
   currentDna: number
   currentEnergy: number
   onBuy: (upgradeId: string) => void
-  gameState: any
 }
 
 export const UpgradeCard: React.FC<UpgradeCardProps> = ({
   upgrade,
   currentDna,
   currentEnergy,
-  onBuy,
-  gameState
+  onBuy
 }) => {
   const cost = calculateUpgradeCost(upgrade.baseCost, upgrade.level, upgrade.costMultiplier)
-  const isUnlocked = canUnlockUpgrade(upgrade.id, gameState)
-  const canAfford = currentDna >= cost && (!upgrade.energyCost || currentEnergy >= upgrade.energyCost)
+  const energyCost = calculateEnergyCost(upgrade.baseEnergyCost || 0, upgrade.level, upgrade.energyCostMultiplier || 1.1)
+  const isUnlocked = canUnlockUpgrade()
+  const canAfford = currentDna >= cost && currentEnergy >= energyCost
   const isMaxLevel = upgrade.level >= upgrade.maxLevel
   const canBuy = isUnlocked && canAfford && !isMaxLevel
 
@@ -36,8 +35,7 @@ export const UpgradeCard: React.FC<UpgradeCardProps> = ({
   const getButtonText = () => {
     if (!isUnlocked) return 'Locked'
     if (isMaxLevel) return 'Max Level'
-    if (!canAfford) return 'Insufficient Resources'
-    return `Buy (${cost} DNA${upgrade.energyCost ? ` + ${upgrade.energyCost} Energy` : ''})`
+    return `Buy (${cost} DNA${energyCost > 0 ? ` + ${energyCost} Energy` : ''})`
   }
 
   const getButtonClass = () => {
@@ -52,28 +50,14 @@ export const UpgradeCard: React.FC<UpgradeCardProps> = ({
       <div className={styles.header}>
         <span className={styles.icon}>{upgrade.icon}</span>
         <div className={styles.titleSection}>
-          <h3 className={styles.title}>{upgrade.name}</h3>
-          <p className={styles.level}>Level {upgrade.level}/{upgrade.maxLevel}</p>
-        </div>
-      </div>
-      
-      <p className={styles.description}>{upgrade.description}</p>
-      
-      <div className={styles.stats}>
-        <div className={styles.stat}>
-          <span className={styles.statLabel}>Cost:</span>
-          <span className={styles.statValue}>
-            {cost} DNA
-            {upgrade.energyCost && ` + ${upgrade.energyCost} Energy`}
-          </span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.statLabel}>Effect:</span>
-          <span className={styles.statValue}>+{upgrade.effect}</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.statLabel}>Total Acquired:</span>
-          <span className={styles.statValue}>+{Math.round(upgrade.effect * upgrade.level * 10) / 10}</span>
+          <div className={styles.titleRow}>
+            <div className={styles.titleWithLevel}>
+              <h3 className={styles.title}>{upgrade.name}</h3>
+              <span className={styles.level}>Level {upgrade.level}/{upgrade.maxLevel}</span>
+            </div>
+            <span className={styles.totalAcquired}>+{Math.round(upgrade.effect * upgrade.level * 10) / 10}</span>
+          </div>
+          <p className={styles.description}>{upgrade.description}</p>
         </div>
       </div>
       

@@ -4,7 +4,7 @@
 import { create } from 'zustand'
 import type { GameState, Resources } from '../../domain/types'
 import { UPGRADES } from '../../domain/content'
-import { calculateUpgradeCost, canUnlockUpgrade } from '../../domain/balance'
+import { calculateUpgradeCost, calculateEnergyCost, canUnlockUpgrade } from '../../domain/balance'
 
 interface GameStore extends GameState {
   // Actions
@@ -21,7 +21,7 @@ interface GameStore extends GameState {
 const initialState: GameState = {
   resources: {
     dna: 0,
-    energy: 100 // Começa com energia inicial
+    energy: 0 // Começa com 0 energia
   },
   capacities: {
     dna: 10, // 1 Tubo de Ensaio inicial
@@ -29,7 +29,7 @@ const initialState: GameState = {
   },
   productionRates: {
     dnaPerSecond: 0,
-    energyPerSecond: 1 // Gerador inicial
+    energyPerSecond: 0 // Começa com 0 produção
   },
   clickPower: {
     dnaPerClick: 1
@@ -70,6 +70,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({
         resources: { ...state.resources, dna: newDna }
       })
+    } else {
+      // TODO: Adicionar feedback visual de capacidade cheia
+      console.log('DNA capacity is full!')
     }
   },
 
@@ -105,19 +108,18 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (!upgrade) return false
     
     // Verificar se está desbloqueado
-    if (!canUnlockUpgrade(upgradeId, state)) return false
+    if (!canUnlockUpgrade()) return false
     
     // Verificar se não atingiu o nível máximo
     if (upgrade.level >= upgrade.maxLevel) return false
     
-    // Calcular custo
+    // Calcular custos
     const cost = calculateUpgradeCost(upgrade.baseCost, upgrade.level, upgrade.costMultiplier)
+    const energyCost = calculateEnergyCost(upgrade.baseEnergyCost || 0, upgrade.level, upgrade.energyCostMultiplier || 1.1)
     
     // Verificar se tem recursos suficientes
     if (state.resources.dna < cost) return false
-    
-    // Verificar custo de energia se necessário
-    if (upgrade.energyCost && state.resources.energy < upgrade.energyCost) return false
+    if (state.resources.energy < energyCost) return false
     
     // Comprar upgrade
     const newLevel = upgrade.level + 1
@@ -132,9 +134,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     
     // Subtrair custos
     newResources.dna -= cost
-    if (upgrade.energyCost) {
-      newResources.energy -= upgrade.energyCost
-    }
+    newResources.energy -= energyCost
     
     // Aplicar efeitos baseados no tipo
     switch (upgrade.effectType) {

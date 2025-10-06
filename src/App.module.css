@@ -26,10 +26,20 @@
 
 .header {
   text-align: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   background: var(--color-bg-secondary);
   border-bottom: 1px solid var(--color-border);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-lg);
 }
 
 .header::after {
@@ -62,10 +72,11 @@
 
 .resources {
   display: flex;
-  justify-content: center;
-  gap: var(--space-lg);
-  margin: var(--space-xl) 0;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  max-width: 400px;
+  width: 100%;
 }
 
 .resource {
@@ -192,6 +203,7 @@
   margin: var(--space-lg) 0;
   max-width: 100%;
   min-height: 50vh;
+  width: 100%;
 }
 
 .leftColumn {
@@ -319,11 +331,20 @@
   min-height: 60vh;
 }
 
+.centerContent .resources {
+  margin: var(--space-lg) 0;
+}
+
+.centerContent .upgradeFilter {
+  margin: var(--space-md) 0;
+}
+
+
 .description {
   text-align: center;
   color: var(--color-text-secondary);
   font-size: 1rem;
-  margin: var(--space-lg) 0;
+  margin: 0 0 var(--space-lg) 0;
   max-width: 350px;
   line-height: 1.6;
 }
@@ -361,6 +382,10 @@
     max-height: 50vh;
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-border);
+  }
+  
+  .titleSection {
+    margin-bottom: var(--space-md);
   }
 }
 

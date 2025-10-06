@@ -2,10 +2,12 @@
 // Custos, caps, multiplicadores
 
 export const TIER_0_BALANCE = {
-  // Upgrades de DNA
+  // DNA Upgrades (Category 1)
   MICROSCOPE: {
-    baseCost: 10,
-    costMultiplier: 1.15, // Progressive cost
+    baseCost: 5,
+    baseEnergyCost: 0,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
     maxLevel: 5,
     effect: 1, // +1 DNA/click
     effectType: 'dnaPerClick' as const,
@@ -13,17 +15,32 @@ export const TIER_0_BALANCE = {
   },
   
   TEST_TUBE: {
-    baseCost: 10,
-    costMultiplier: 1.12, // Progressive cost
-    maxLevel: 10, // +100 capacidade total
-    effect: 10, // +10 capacidade DNA
+    baseCost: 8,
+    baseEnergyCost: 2,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
+    maxLevel: 10,
+    effect: 10, // +10 DNA capacity
+    effectType: 'dnaCapacity' as const,
+    unlocked: true
+  },
+  
+  DNA_STORAGE: {
+    baseCost: 25,
+    baseEnergyCost: 8,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
+    maxLevel: 5,
+    effect: 50, // +50 DNA capacity
     effectType: 'dnaCapacity' as const,
     unlocked: true
   },
   
   INTERN_SCIENTIST: {
-    baseCost: 25,
+    baseCost: 15,
+    baseEnergyCost: 5,
     costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
     maxLevel: 5,
     effect: 0.2, // +0.2 DNA/s
     effectType: 'dnaPerSecond' as const,
@@ -31,68 +48,63 @@ export const TIER_0_BALANCE = {
   },
   
   PORTABLE_LAB: {
-    baseCost: 150,
-    costMultiplier: 1.2,
+    baseCost: 50,
+    baseEnergyCost: 15,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
     maxLevel: 3,
     effect: 1, // +1 DNA/s
     effectType: 'dnaPerSecond' as const,
-    unlocked: false // Desbloqueado após ter 1 Estagiário
-  },
-  
-  DNA_STORAGE: {
-    baseCost: 100,
-    costMultiplier: 1.15,
-    maxLevel: 10,
-    effect: 100, // +100 capacidade DNA
-    effectType: 'dnaCapacity' as const,
     unlocked: true
   },
   
-  // Upgrades de Energia
+  // Energy Upgrades (Category 2)
   IMPROVISED_GENERATOR: {
-    baseCost: 50,
-    costMultiplier: 1.12,
+    baseCost: 8,
+    baseEnergyCost: 0,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
     maxLevel: 10,
-    effect: 0.1, // +0.1 Energia/s
+    effect: 0.1, // +0.1 Energy/s
     effectType: 'energyPerSecond' as const,
     unlocked: true
   },
   
   IMPROVISED_BATTERY: {
-    baseCost: 100,
-    costMultiplier: 1.0, // Custo fixo
-    maxLevel: 10, // +100 capacidade total
-    effect: 10, // +10 capacidade Energia
+    baseCost: 12,
+    baseEnergyCost: 3,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
+    maxLevel: 10,
+    effect: 10, // +10 Energy capacity
     effectType: 'energyCapacity' as const,
     unlocked: true
   },
   
   MICRO_PLASMA_REACTOR: {
-    baseCost: 250,
-    costMultiplier: 1.3,
+    baseCost: 100,
+    baseEnergyCost: 25,
+    costMultiplier: 1.15,
+    energyCostMultiplier: 1.1,
     maxLevel: 2,
-    effect: 2, // +2 Energia/s
+    effect: 2, // +2 Energy/s
     effectType: 'energyPerSecond' as const,
-    energyCost: 25, // Custo adicional em energia
-    unlocked: false // Desbloqueado após ter 25+ energia
+    unlocked: true
   }
 } as const
 
-// Function to calculate progressive cost
+// Function to calculate progressive cost for DNA
 export const calculateUpgradeCost = (baseCost: number, level: number, multiplier: number): number => {
   return Math.floor(baseCost * Math.pow(multiplier, level))
 }
 
+// Function to calculate progressive cost for Energy
+export const calculateEnergyCost = (baseEnergyCost: number, level: number, multiplier: number): number => {
+  return Math.floor(baseEnergyCost * Math.pow(multiplier, level))
+}
+
 // Função para verificar se upgrade pode ser desbloqueado
-export const canUnlockUpgrade = (upgradeId: string, gameState: any): boolean => {
-  switch (upgradeId) {
-    case 'PORTABLE_LAB':
-      return gameState.upgrades.INTERN_SCIENTIST?.level > 0
-    
-    case 'MICRO_PLASMA_REACTOR':
-      return gameState.resources.energy >= 25
-    
-    default:
-      return true
-  }
+export const canUnlockUpgrade = (): boolean => {
+  // All upgrades are unlocked by default in the new balance
+  return true
 }

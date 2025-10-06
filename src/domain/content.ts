@@ -4,7 +4,7 @@
 import { TIER_0_BALANCE } from './balance'
 
 export const UPGRADES = {
-  // DNA Upgrades
+  // DNA Upgrades (Category 1)
   MICROSCOPE: {
     id: 'MICROSCOPE',
     name: 'Microscope',
@@ -21,8 +21,18 @@ export const UPGRADES = {
     description: 'Increases DNA capacity by +10',
     icon: '🧪',
     category: 'dna',
-    costType: 'dna' as const,
+    costType: 'both' as const,
     ...TIER_0_BALANCE.TEST_TUBE
+  },
+  
+  DNA_STORAGE: {
+    id: 'DNA_STORAGE',
+    name: 'DNA Storage',
+    description: 'Increases DNA capacity by +50',
+    icon: '📦',
+    category: 'dna',
+    costType: 'both' as const,
+    ...TIER_0_BALANCE.DNA_STORAGE
   },
   
   INTERN_SCIENTIST: {
@@ -31,7 +41,7 @@ export const UPGRADES = {
     description: 'Produces +0.2 DNA/s automatically',
     icon: '👨‍🔬',
     category: 'dna',
-    costType: 'dna' as const,
+    costType: 'both' as const,
     ...TIER_0_BALANCE.INTERN_SCIENTIST
   },
   
@@ -41,21 +51,11 @@ export const UPGRADES = {
     description: 'Produces +1 DNA/s automatically',
     icon: '🏗️',
     category: 'dna',
-    costType: 'dna' as const,
+    costType: 'both' as const,
     ...TIER_0_BALANCE.PORTABLE_LAB
   },
   
-  DNA_STORAGE: {
-    id: 'DNA_STORAGE',
-    name: 'DNA Storage',
-    description: 'Increases DNA capacity by +100',
-    icon: '📦',
-    category: 'dna',
-    costType: 'dna' as const,
-    ...TIER_0_BALANCE.DNA_STORAGE
-  },
-  
-  // Energy Upgrades
+  // Energy Upgrades (Category 2)
   IMPROVISED_GENERATOR: {
     id: 'IMPROVISED_GENERATOR',
     name: 'Improvised Generator',
@@ -72,7 +72,7 @@ export const UPGRADES = {
     description: 'Increases Energy capacity by +10',
     icon: '🔋',
     category: 'energy',
-    costType: 'dna' as const,
+    costType: 'both' as const,
     ...TIER_0_BALANCE.IMPROVISED_BATTERY
   },
   
