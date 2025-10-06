@@ -43,7 +43,7 @@ export const TIER_0_BALANCE = {
     baseCost: 100,
     costMultiplier: 1.15,
     maxLevel: 10,
-    effect: 20, // +20 capacidade DNA
+    effect: 100, // +100 capacidade DNA
     effectType: 'dnaCapacity' as const,
     unlocked: true
   },

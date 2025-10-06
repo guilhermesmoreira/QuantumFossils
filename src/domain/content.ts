@@ -48,7 +48,7 @@ export const UPGRADES = {
   DNA_STORAGE: {
     id: 'DNA_STORAGE',
     name: 'DNA Storage',
-    description: 'Increases DNA capacity by +20',
+    description: 'Increases DNA capacity by +100',
     icon: '📦',
     category: 'dna',
     costType: 'dna' as const,
