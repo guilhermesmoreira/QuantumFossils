@@ -6,6 +6,8 @@ import { ProgressBar } from './ui/components/ProgressBar'
 import { SaveLoadModal } from './ui/components/SaveLoadModal'
 import { UnlockNotification } from './ui/components/UnlockNotification'
 import { Tier1Progress } from './ui/components/Tier1Progress'
+import { BigActionButton } from './ui/components/BigActionButton'
+import { DebugOverlay } from './ui/components/DebugOverlay'
 import { getUpgradesByCategory, UPGRADES } from './domain/content'
 import { isTier1Unlocked } from './domain/unlocks'
 import styles from './App.module.css'
@@ -49,6 +51,7 @@ function App() {
   const [showSaveLoadModal, setShowSaveLoadModal] = React.useState(false)
   const [showTier1Notification, setShowTier1Notification] = React.useState(false)
   const [tier1Unlocked, setTier1Unlocked] = React.useState(false)
+  const [showDebugOverlay, setShowDebugOverlay] = React.useState(false)
   
   // Estados para debug do game loop
   const [gameLoopStats, setGameLoopStats] = React.useState({
@@ -120,6 +123,12 @@ function App() {
                 >
                   💾 Save/Load
                 </button>
+                <button
+                  className={styles.debugButton}
+                  onClick={() => setShowDebugOverlay(true)}
+                >
+                  🔧 Debug
+                </button>
               </div>
             </div>
             
@@ -173,11 +182,11 @@ function App() {
           </div>
 
           <div className={styles.centerContent}>
-              <div className={styles.card}>
-                <button className={styles.actionButton} onClick={handleClickDna}>
-                  DNA (+{clickPower.dnaPerClick})
-                </button>
-              </div>
+            <BigActionButton
+              onClick={handleClickDna}
+              dnaPerClick={clickPower.dnaPerClick}
+              isEnabled={resources.dna < capacities.dna}
+            />
             
             <div className={styles.resources}>
               <ProgressBar
@@ -275,24 +284,21 @@ function App() {
           onClose={() => setShowTier1Notification(false)}
         />
 
-        {/* Debug overlay temporário para game loop */}
-        <div style={{
-          position: 'fixed',
-          top: '10px',
-          left: '10px',
-          background: 'rgba(0, 0, 0, 0.8)',
-          color: '#6ee7f8',
-          padding: '10px',
-          borderRadius: '5px',
-          fontFamily: 'Orbitron, monospace',
-          fontSize: '12px',
-          zIndex: 1000,
-          border: '1px solid #6ee7f8'
-        }}>
-          <div>FPS: {gameLoopStats.fps}</div>
-          <div>DeltaTime: {gameLoopStats.deltaTime}s</div>
-          <div>Last Update: {new Date(gameLoopStats.lastUpdate).toLocaleTimeString()}</div>
-        </div>
+        <DebugOverlay
+          isVisible={showDebugOverlay}
+          onClose={() => setShowDebugOverlay(false)}
+          gameStats={{
+            fps: gameLoopStats.fps,
+            deltaTime: gameLoopStats.deltaTime,
+            resources,
+            capacities,
+            production,
+            clickPower,
+            upgrades,
+            achievements,
+            sessionStartTime: Date.now() - (Date.now() - gameLoopStats.lastUpdate)
+          }}
+        />
 
       </div>
     )
