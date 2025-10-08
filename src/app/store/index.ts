@@ -28,8 +28,8 @@ const initialState: GameState = {
     energy: 0 // Começa com 0 energia
   },
   capacities: {
-    dna: 10, // 1 Tubo de Ensaio inicial
-    energy: 100 // 1 Bateria inicial
+    dna: 20, // Aumentado para melhor progressão inicial
+    energy: 50 // Reduzido para criar bottleneck inicial
   },
   productionRates: {
     dnaPerSecond: 0,

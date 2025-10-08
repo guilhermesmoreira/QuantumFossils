@@ -18,7 +18,7 @@ export const UPGRADES = {
   TEST_TUBE: {
     id: 'TEST_TUBE',
     name: 'Test Tube',
-    description: 'Increases DNA capacity by +10',
+    description: 'Increases DNA capacity by +15',
     icon: '🧪',
     category: 'dna',
     costType: 'both' as const,
@@ -28,7 +28,7 @@ export const UPGRADES = {
   DNA_STORAGE: {
     id: 'DNA_STORAGE',
     name: 'DNA Storage',
-    description: 'Increases DNA capacity by +50',
+    description: 'Increases DNA capacity by +75',
     icon: '📦',
     category: 'dna',
     costType: 'both' as const,
@@ -38,7 +38,7 @@ export const UPGRADES = {
   INTERN_SCIENTIST: {
     id: 'INTERN_SCIENTIST',
     name: 'Intern Scientist',
-    description: 'Produces +0.2 DNA/s automatically',
+    description: 'Produces +0.5 DNA/s automatically',
     icon: '👨‍🔬',
     category: 'dna',
     costType: 'both' as const,
@@ -48,7 +48,7 @@ export const UPGRADES = {
   PORTABLE_LAB: {
     id: 'PORTABLE_LAB',
     name: 'Portable Laboratory',
-    description: 'Produces +1 DNA/s automatically',
+    description: 'Produces +2 DNA/s automatically',
     icon: '🏗️',
     category: 'dna',
     costType: 'both' as const,
@@ -59,7 +59,7 @@ export const UPGRADES = {
   IMPROVISED_GENERATOR: {
     id: 'IMPROVISED_GENERATOR',
     name: 'Improvised Generator',
-    description: 'Produces +0.1 Energy/s automatically',
+    description: 'Produces +0.3 Energy/s automatically',
     icon: '⚡',
     category: 'energy',
     costType: 'dna' as const,
@@ -69,7 +69,7 @@ export const UPGRADES = {
   IMPROVISED_BATTERY: {
     id: 'IMPROVISED_BATTERY',
     name: 'Improvised Battery',
-    description: 'Increases Energy capacity by +10',
+    description: 'Increases Energy capacity by +20',
     icon: '🔋',
     category: 'energy',
     costType: 'both' as const,
@@ -79,7 +79,7 @@ export const UPGRADES = {
   MICRO_PLASMA_REACTOR: {
     id: 'MICRO_PLASMA_REACTOR',
     name: 'Micro Plasma Reactor',
-    description: 'Produces +2 Energy/s automatically',
+    description: 'Produces +3 Energy/s automatically',
     icon: '🔥',
     category: 'energy',
     costType: 'both' as const,

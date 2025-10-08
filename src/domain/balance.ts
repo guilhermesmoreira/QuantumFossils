@@ -2,92 +2,92 @@
 // Custos, caps, multiplicadores
 
 export const TIER_0_BALANCE = {
-  // DNA Upgrades (Category 1)
+  // DNA Upgrades (Category 1) - Balanceamento melhorado
   MICROSCOPE: {
-    baseCost: 5,
+    baseCost: 3, // Reduzido de 5 para 3
     baseEnergyCost: 0,
-    costMultiplier: 1.15,
+    costMultiplier: 1.25, // Aumentado de 1.15 para 1.25
     energyCostMultiplier: 1.1,
-    maxLevel: 5,
+    maxLevel: 8, // Aumentado de 5 para 8
     effect: 1, // +1 DNA/click
     effectType: 'dnaPerClick' as const,
     unlocked: true
   },
   
   TEST_TUBE: {
-    baseCost: 8,
-    baseEnergyCost: 2,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 10,
-    effect: 10, // +10 DNA capacity
+    baseCost: 5, // Reduzido de 8 para 5
+    baseEnergyCost: 1, // Reduzido de 2 para 1
+    costMultiplier: 1.25, // Aumentado de 1.15 para 1.25
+    energyCostMultiplier: 1.15, // Aumentado de 1.1 para 1.15
+    maxLevel: 12, // Aumentado de 10 para 12
+    effect: 15, // Aumentado de 10 para 15
     effectType: 'dnaCapacity' as const,
     unlocked: true
   },
   
   DNA_STORAGE: {
-    baseCost: 25,
-    baseEnergyCost: 8,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 5,
-    effect: 50, // +50 DNA capacity
+    baseCost: 20, // Reduzido de 25 para 20
+    baseEnergyCost: 5, // Reduzido de 8 para 5
+    costMultiplier: 1.3, // Aumentado de 1.15 para 1.3
+    energyCostMultiplier: 1.2, // Aumentado de 1.1 para 1.2
+    maxLevel: 6, // Aumentado de 5 para 6
+    effect: 75, // Aumentado de 50 para 75
     effectType: 'dnaCapacity' as const,
     unlocked: true
   },
   
   INTERN_SCIENTIST: {
-    baseCost: 15,
-    baseEnergyCost: 5,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 5,
-    effect: 0.2, // +0.2 DNA/s
+    baseCost: 8, // Reduzido de 15 para 8
+    baseEnergyCost: 3, // Reduzido de 5 para 3
+    costMultiplier: 1.3, // Aumentado de 1.15 para 1.3
+    energyCostMultiplier: 1.2, // Aumentado de 1.1 para 1.2
+    maxLevel: 8, // Aumentado de 5 para 8
+    effect: 0.5, // Aumentado de 0.2 para 0.5
     effectType: 'dnaPerSecond' as const,
     unlocked: true
   },
   
   PORTABLE_LAB: {
-    baseCost: 50,
-    baseEnergyCost: 15,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 3,
-    effect: 1, // +1 DNA/s
+    baseCost: 30, // Reduzido de 50 para 30
+    baseEnergyCost: 10, // Reduzido de 15 para 10
+    costMultiplier: 1.35, // Aumentado de 1.15 para 1.35
+    energyCostMultiplier: 1.25, // Aumentado de 1.1 para 1.25
+    maxLevel: 5, // Aumentado de 3 para 5
+    effect: 2, // Aumentado de 1 para 2
     effectType: 'dnaPerSecond' as const,
     unlocked: true
   },
   
-  // Energy Upgrades (Category 2)
+  // Energy Upgrades (Category 2) - Balanceamento melhorado
   IMPROVISED_GENERATOR: {
-    baseCost: 8,
+    baseCost: 4, // Reduzido de 8 para 4
     baseEnergyCost: 0,
-    costMultiplier: 1.15,
+    costMultiplier: 1.25, // Aumentado de 1.15 para 1.25
     energyCostMultiplier: 1.1,
-    maxLevel: 10,
-    effect: 0.1, // +0.1 Energy/s
+    maxLevel: 15, // Aumentado de 10 para 15
+    effect: 0.3, // Aumentado de 0.1 para 0.3
     effectType: 'energyPerSecond' as const,
     unlocked: true
   },
   
   IMPROVISED_BATTERY: {
-    baseCost: 12,
-    baseEnergyCost: 3,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 10,
-    effect: 10, // +10 Energy capacity
+    baseCost: 6, // Reduzido de 12 para 6
+    baseEnergyCost: 2, // Reduzido de 3 para 2
+    costMultiplier: 1.25, // Aumentado de 1.15 para 1.25
+    energyCostMultiplier: 1.15, // Aumentado de 1.1 para 1.15
+    maxLevel: 15, // Aumentado de 10 para 15
+    effect: 20, // Aumentado de 10 para 20
     effectType: 'energyCapacity' as const,
     unlocked: true
   },
   
   MICRO_PLASMA_REACTOR: {
-    baseCost: 100,
-    baseEnergyCost: 25,
-    costMultiplier: 1.15,
-    energyCostMultiplier: 1.1,
-    maxLevel: 2,
-    effect: 2, // +2 Energy/s
+    baseCost: 60, // Reduzido de 100 para 60
+    baseEnergyCost: 15, // Reduzido de 25 para 15
+    costMultiplier: 1.4, // Aumentado de 1.15 para 1.4
+    energyCostMultiplier: 1.3, // Aumentado de 1.1 para 1.3
+    maxLevel: 4, // Aumentado de 2 para 4
+    effect: 3, // Aumentado de 2 para 3
     effectType: 'energyPerSecond' as const,
     unlocked: true
   }
